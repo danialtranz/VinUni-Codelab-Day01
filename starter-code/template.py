@@ -25,8 +25,8 @@ _ENV = dotenv_values(Path(__file__).resolve().parent.parent / ".env")
 PRICING_1M_TOKENS = {
     "gpt-4o": {"input": 5.00, "output": 20.00},
     "gpt-4o-mini": {"input": 0.150, "output": 0.600},
-    "gemini-2.5-flash": {"input": 0.075, "output": 0.300},
-    "gemini-2.5-pro": {"input": 1.25, "output": 5.00},
+    "gemini-3.5-flash": {"input": 1.50, "output": 9.00},
+    "gemini-3.5-flash-lite": {"input": 0.30, "output": 2.50},
     "claude-3-5-sonnet": {"input": 3.00, "output": 15.00},
     "claude-3-5-haiku": {"input": 0.80, "output": 4.00},
 }
@@ -34,7 +34,7 @@ PRICING_1M_TOKENS = {
 # Standard Model Identifiers
 OPENAI_MODEL = "gpt-4o"
 OPENAI_MINI_MODEL = "gpt-4o-mini"
-GEMINI_MODEL = "gemini-2.5-flash"
+GEMINI_MODEL = "gemini-3.5-flash"
 ANTHROPIC_MODEL = "claude-3-5-haiku"
 
 
@@ -99,7 +99,7 @@ def call_openai(
 
 
 # ---------------------------------------------------------------------------
-# Task 2 — Call Google Gemini 2.5 (Standard Practical Model)
+# Task 2 — Call Google Gemini 3.5 (Standard Practical Model)
 # ---------------------------------------------------------------------------
 def call_gemini(
     prompt: str,
@@ -109,12 +109,12 @@ def call_gemini(
     max_tokens: int = 256,
 ) -> tuple[str, float, dict]:
     """
-    Call the Google Gemini API (using Gemini 2.5 Flash as standard) and return
+    Call the Google Gemini API (using Gemini 3.5 Flash as standard) and return
     the response text, latency, and token usage stats.
 
     Args:
         prompt:      The user message to send.
-        model:       The Gemini model to use (default: gemini-2.5-flash).
+        model:       The Gemini model to use (default: gemini-3.5-flash).
         temperature: Sampling temperature.
         top_p:       Nucleus sampling threshold.
         max_tokens:  Maximum number of tokens to generate.
@@ -223,11 +223,11 @@ def call_anthropic(
 
 
 # ---------------------------------------------------------------------------
-# Task 4 — Compare Models (OpenAI GPT-4o vs OpenAI Mini vs Gemini 2.5 Flash)
+# Task 4 — Compare Models (OpenAI GPT-4o vs OpenAI Mini vs Gemini 3.5 Flash)
 # ---------------------------------------------------------------------------
 def compare_models(prompt: str) -> dict:
     """
-    Call OpenAI (gpt-4o), OpenAI Mini (gpt-4o-mini), and Gemini 2.5 Flash (gemini-2.5-flash)
+    Call OpenAI (gpt-4o), OpenAI Mini (gpt-4o-mini), and Gemini 3.5 Flash (gemini-3.5-flash)
     with the same prompt and return a structured comparison dictionary.
 
     Calculate the exact USD token cost for input + output using the prices in PRICING_1M_TOKENS.
@@ -243,7 +243,7 @@ def compare_models(prompt: str) -> dict:
     """
     # TODO: Call call_openai with default gpt-4o model
     # TODO: Call call_openai with gpt-4o-mini model
-    # TODO: Call call_gemini with default gemini-2.5-flash model
+    # TODO: Call call_gemini with default gemini-3.5-flash model
     # TODO: Calculate costs exactly based on input and output token counts using PRICING_1M_TOKENS
     #       Formula: Cost = (input_tokens * input_rate_per_1M + output_tokens * output_rate_per_1M) / 1,000,000
     # TODO: Assemble and return the comparison dictionary.
@@ -277,14 +277,14 @@ def compare_models(prompt: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# Task 5 — Streaming chatbot with Gemini 2.5 (Focus Model)
+# Task 5 — Streaming chatbot with Gemini 3.5 (Focus Model)
 # ---------------------------------------------------------------------------
 def streaming_chatbot() -> None:
     """
-    Run an interactive streaming chatbot in the terminal using Gemini 2.5.
+    Run an interactive streaming chatbot in the terminal using Gemini 3.5.
 
     Behaviour:
-        - Streams response tokens from Gemini 2.5 Flash as they arrive.
+        - Streams response tokens from Gemini 3.5 Flash as they arrive.
         - Maintains the last 3 turns of conversation history for context.
         - Typing 'quit' or 'exit' ends the session.
 
@@ -437,7 +437,7 @@ if __name__ == "__main__":
         print(f"Skipping live API comparison test: {e}")
         print("Set your API keys to run manual tests.")
 
-    print("\n=== Starting Gemini 2.5 Chatbot (type 'quit' to exit) ===")
+    print("\n=== Starting Gemini 3.5 Chatbot (type 'quit' to exit) ===")
     try:
         streaming_chatbot()
     except Exception as e:
